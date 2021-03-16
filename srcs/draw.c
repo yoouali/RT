@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeddaqqa <aeddaqqa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 16:53:08 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/09 11:18:03 by aeddaqqa         ###   ########.fr       */
+/*   Updated: 2021/03/16 17:29:28 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,24 @@ unsigned int	pixel_color(t_rt *rt, t_ray *ray)
 void			apply_antiliasing(t_rt *rt, int x, int y)
 {
 	int		z;
-	t_color	c;
+	t_vect3	c;
 	t_ray	*ray;
 	t_rr	r;
 
 	z = 0;
-	c = (t_color){0, 0, 0};
-	while (z < 5)
+	c = (t_vect3){0, 0, 0};
+	r.r1 = 0.0000;
+	r.r2 = 0.0000;
+	while (z < 20)
 	{
-		r.r1 = (rand() % 10) / 10.;
-		r.r2 = (rand() % 10) / 10.;
+		r.r1 = r.r1 + 0.05;
+		r.r2 = r.r2 + 0.05;
 		ray = ray_init(rt, x, y, r);
 		c = vect_add(c, int_to_rgb(pixel_color(rt, ray)));
 		free(ray);
 		z++;
 	}
-	c = v_c_prod(c, (double)(1.0 / 5.0));
+	c = v_c_prod(c, (double)(1.0 / 20.0));
 	c.x = (int)c.x & 255;
 	c.y = (int)c.y & 255;
 	c.z = (int)c.z & 255;
