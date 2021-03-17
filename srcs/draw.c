@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 16:53:08 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/17 07:25:25 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/17 16:09:58 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,27 @@ void			draw_scene(t_rt *rt, int x, int y)
 {
 	t_rr	r;
 	t_ray	*ray;
+	t_col	col1;
+	t_col	col2;
+	t_col	col;
 
 	r.r1 = .5;
 	r.r2 = .5;
 	ray = ray_init(rt, x, y, r);
-	rt->sdl->data[y * W + x] = pixel_color(rt, ray);
+	if (rt->filters[5] == 1)
+	{
+		col1 = int_to_rgb_yatak(pixel_color(rt, ray));
+		ray->origin.x += 4.0;
+		col2 = int_to_rgb_yatak(pixel_color(rt, ray));
+		col1.b += 50;
+		col1.r = 0;
+		col2.r += 50;
+		col2.b = 0;
+		col = plus_color(col1, col2);
+		col = divide_color(col, 2);
+		rt->sdl->data[y * W + x] = rgb_to_int_yatak(col);
+	}
+	else 
+		rt->sdl->data[y * W + x] = pixel_color(rt, ray);
 	free(ray);
 }

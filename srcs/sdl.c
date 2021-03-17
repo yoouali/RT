@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 10:28:22 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/17 07:43:51 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/17 15:58:56 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void			render(t_sdl *sdl, t_rt *rt)
 		grey_effect(rt->sdl->data);
 	if (i == 4)
 		cartoon_effect(rt->sdl->data);
-	if (i == 5)
-		anaglyph_effect(rt->sdl->data);
 	if (i == 6)
 		blur_effect(rt->sdl->data);
 	SDL_RenderClear(sdl->ren_ptr);
