@@ -6,7 +6,7 @@
 #    By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/08 17:22:57 by chzabakh          #+#    #+#              #
-#    Updated: 2021/03/16 14:28:49 by yoouali          ###   ########.fr        #
+#    Updated: 2021/03/17 16:23:45 by yoouali          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libfilters.a
 FLAGS= -Wall -Wextra -Werror
 OBJDIR = ../../objs
 SRCDIR= ./
-OBJ= $(OBJDIR)/filters.o $(OBJDIR)/antialiasing.o $(OBJDIR)/bmp.o $(OBJDIR)/cartoon.o\
+OBJ= $(OBJDIR)/antialiasing.o $(OBJDIR)/filters.o $(OBJDIR)/bmp.o $(OBJDIR)/cartoon.o\
 $(OBJDIR)/grey.o $(OBJDIR)/negative.o $(OBJDIR)/noise.o\
 $(OBJDIR)/sepia.o $(OBJDIR)/stereo.o $(OBJDIR)/blur.o 
 INC = ../../includes/

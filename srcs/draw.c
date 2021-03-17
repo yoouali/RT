@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 16:53:08 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/17 16:09:58 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/17 16:38:07 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,15 @@ void			apply_antiliasing(t_rt *rt, int x, int y)
 		z++;
 	}
 	col = divide_color(col, (double)(20.0));
-	col.r = (int)col.r & 255;
-	col.g = (int)col.g & 255;
-	col.b = (int)col.b & 255;
+	col.r = col.r > 255 ? 255 : col.r;
+	col.g = col.g > 255 ? 255 : col.g;
+	col.b = col.b > 255 ? 255 : col.b;
 	rt->sdl->data[y * W + x] = rgb_to_int_yatak(col);
 }
 
 void			draw_scene(t_rt *rt, int x, int y)
 {
+
 	t_rr	r;
 	t_ray	*ray;
 	t_col	col1;
@@ -122,12 +123,12 @@ void			draw_scene(t_rt *rt, int x, int y)
 	if (rt->filters[5] == 1)
 	{
 		col1 = int_to_rgb_yatak(pixel_color(rt, ray));
-		ray->origin.x += 4.0;
+		ray->origin.x += 5.0;
 		col2 = int_to_rgb_yatak(pixel_color(rt, ray));
-		col1.b += 50;
+		col1.g += 50;
 		col1.r = 0;
 		col2.r += 50;
-		col2.b = 0;
+		col2.g = 0;
 		col = plus_color(col1, col2);
 		col = divide_color(col, 2);
 		rt->sdl->data[y * W + x] = rgb_to_int_yatak(col);
