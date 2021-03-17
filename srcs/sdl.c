@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabouzah <nabouzah@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 10:28:22 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/07 14:42:51 by nabouzah         ###   ########.fr       */
+/*   Updated: 2021/03/17 07:43:51 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,16 @@ void			render(t_sdl *sdl, t_rt *rt)
 			break ;
 		i++;
 	}
-	if (i == 1)
-		img_noise(rt->sdl->data);
 	if (i == 2)
-		img_sepia(rt->sdl->data);
+		sepia_effect(rt->sdl->data);
 	if (i == 3)
-		img_grey(rt->sdl->data);
+		grey_effect(rt->sdl->data);
 	if (i == 4)
-		ft_cartoon(rt->sdl->data);
+		cartoon_effect(rt->sdl->data);
 	if (i == 5)
-		img_ddd(rt->sdl->data);
+		anaglyph_effect(rt->sdl->data);
 	if (i == 6)
-		blurr(rt->sdl->data);
+		blur_effect(rt->sdl->data);
 	SDL_RenderClear(sdl->ren_ptr);
 	SDL_UpdateTexture(sdl->tex_ptr, NULL, sdl->data, W * 4);
 	SDL_RenderCopy(sdl->ren_ptr, sdl->tex_ptr, NULL, NULL);

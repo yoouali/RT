@@ -6,13 +6,13 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 15:12:05 by chzabakh          #+#    #+#             */
-/*   Updated: 2021/03/16 17:32:53 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/17 07:38:27 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
 
-void	img_grey(int *img)
+void	grey_effect(int *img)
 {
 	int		i;
 	t_col	col;

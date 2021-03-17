@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 16:53:08 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/16 17:29:28 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/17 07:25:25 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ unsigned int	pixel_color(t_rt *rt, t_ray *ray)
 void			apply_antiliasing(t_rt *rt, int x, int y)
 {
 	int		z;
-	t_vect3	c;
+	t_col	col;
 	t_ray	*ray;
 	t_rr	r;
 
 	z = 0;
-	c = (t_vect3){0, 0, 0};
+	col = (t_col){0, 0, 0};
 	r.r1 = 0.0000;
 	r.r2 = 0.0000;
 	while (z < 20)
@@ -97,15 +97,15 @@ void			apply_antiliasing(t_rt *rt, int x, int y)
 		r.r1 = r.r1 + 0.05;
 		r.r2 = r.r2 + 0.05;
 		ray = ray_init(rt, x, y, r);
-		c = vect_add(c, int_to_rgb(pixel_color(rt, ray)));
+		col = plus_color(col, int_to_rgb_yatak(pixel_color(rt, ray)));
 		free(ray);
 		z++;
 	}
-	c = v_c_prod(c, (double)(1.0 / 20.0));
-	c.x = (int)c.x & 255;
-	c.y = (int)c.y & 255;
-	c.z = (int)c.z & 255;
-	rt->sdl->data[y * W + x] = rgb_to_int(c);
+	col = divide_color(col, (double)(20.0));
+	col.r = (int)col.r & 255;
+	col.g = (int)col.g & 255;
+	col.b = (int)col.b & 255;
+	rt->sdl->data[y * W + x] = rgb_to_int_yatak(col);
 }
 
 void			draw_scene(t_rt *rt, int x, int y)

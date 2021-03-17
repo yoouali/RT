@@ -6,13 +6,13 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 15:12:57 by chzabakh          #+#    #+#             */
-/*   Updated: 2021/03/16 14:36:43 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/17 07:37:26 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
 
-void	img_sepia(int *img)
+void	sepia_effect(int *img)
 {
 	int		i;
 	t_col	col;

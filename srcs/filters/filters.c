@@ -26,3 +26,23 @@ t_col       alpha_compositing(t_col c1, t_col c2, double a1, double a2)
     col.b = (c2.b * a2 + c1.b * a1 * (1 - a2)) / alpha;
     return (col);
 }
+
+t_col       plus_color(t_col c1, t_col c2)
+{
+    t_col   col;
+
+    col.r = c1.r + c2.r;
+    col.g = c1.g + c2.g;
+    col.b = c1.b + c2.b;
+    return (col);
+}
+
+t_col       divide_color(t_col c, double v)
+{
+    t_col   col;
+
+    col.r = c.r / v;
+    col.g = c.g / v;
+    col.b = c.b / v;
+    return (col);
+}
