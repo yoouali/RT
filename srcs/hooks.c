@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabouzah <nabouzah@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 16:49:08 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/08 13:00:05 by chzabakh         ###   ########.fr       */
+/*   Updated: 2021/03/18 16:27:31 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,17 @@ void	next_cam(t_rt **r)
 			first_render(rt);
 			menu(rt->sdl, rt->save_filter);
 		}
+	}
+	if (rt->sdl->key_table[SDL_SCANCODE_S] && rt->sdl->save == 0)
+	{
+		printf("key pres\n");
+		image_create(rt->sdl->data);
+		rt->sdl->save = 1;
+	}
+	if (rt->sdl->event.type == SDL_KEYUP && rt->sdl->event.key.keysym.sym == 's')
+	{
+		printf("%c key released\n", (char)rt->sdl->event.key.keysym.sym);
+		rt->sdl->save = 0;
 	}
 	hooks2(r);
 }
