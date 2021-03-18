@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:09:12 by chzabakh          #+#    #+#             */
-/*   Updated: 2021/03/17 16:19:25 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/18 14:32:43 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	cartoon_effect(int *img)
 		while (ind.j < 50)
 		{
 			col2 = int_to_rgb_yatak(tab[ind.j]);
-			dist.j = sqrt(pow(col1.r - col2.r, 2) + pow(col1.g - col2.g, 2) + pow(col1.b - col2.b, 2));
+			dist.j = sqrt(pow(col2.r - col1.r, 2) + pow(col2.g - col1.g, 2) + pow(col2.b - col1.b, 2));
 			if (dist.j < dist.i)
 			{
 				dist.i = dist.j;
