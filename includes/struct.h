@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 11:47:47 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/18 16:06:21 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/19 08:53:07 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,9 @@ typedef struct	s_sdl
 	int				save;
 	int				*tex;
 	int				data[W * H];
+	char			*text[3];
+	int				indtext;
+	int				enterind;
 }				t_sdl;
 
 typedef struct	s_rt

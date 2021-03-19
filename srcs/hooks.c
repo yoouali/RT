@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 16:49:08 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/18 16:27:31 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/19 09:21:01 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,32 @@ void	next_cam(t_rt **r)
 	hooks2(r);
 }
 
+void		clear_camera(t_rt *rt)
+{
+	int		i;
+	int		j;
+
+	printf("set new origin\n");
+	rt->cameras->o.x = (double)ft_atoi(rt->sdl->text[0]);
+	rt->cameras->o.y = (double)ft_atoi(rt->sdl->text[1]);
+	rt->cameras->o.z = (double)ft_atoi(rt->sdl->text[2]);
+	rt->sdl->indtext = 0;
+	rt->sdl->enterind = 0;
+	i = 0;
+	while (i < 3)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			rt->sdl->text[i][j] = '\0';
+			j++;
+		}
+		i++;
+	}
+	first_render(rt);
+	menu(rt->sdl, rt->save_filter);
+}
+
 void	hooks(t_rt **r)
 {
 	t_rt *rt;
@@ -99,11 +125,15 @@ void	hooks(t_rt **r)
 		first_render(rt);
 		menu(rt->sdl, rt->save_filter);
 	}
-}
+	enter_camera_position(rt);
+}	
 
 void	mouse_hook(t_rt **r, int *to_do)
 {
 	t_rt *rt;
+
+
+	SDL_StartTextInput();
 
 	rt = *r;
 	if (SDL_GetMouseFocus() == rt->sdl->win_menu)
@@ -117,9 +147,11 @@ void	mouse_hook(t_rt **r, int *to_do)
 				rt->filters[*to_do] = 1;
 				rt->save_filter = *to_do;
 			}
-			first_render(rt);
-			render(rt->sdl, rt);
-		}
+			
+			}
+		first_render(rt);
+		render(rt->sdl, rt);
 		menu(rt->sdl, rt->save_filter);
 	}
+	SDL_StopTextInput();
 }
