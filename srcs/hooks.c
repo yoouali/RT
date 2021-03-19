@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 16:49:08 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/19 10:00:24 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/19 17:47:50 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	next_cam(t_rt **r)
 			rt->cameras = rt->cameras->next;
 			new_camera(rt);
 			first_render(rt);
-			menu(rt->sdl, rt->save_filter);
+			//menu(rt->sdl, rt->save_filter);
 		}
 	}
 	if (rt->sdl->key_table[SDL_SCANCODE_P])
@@ -55,7 +55,7 @@ void	next_cam(t_rt **r)
 			rt->cameras = rt->cameras->prev;
 			new_camera(rt);
 			first_render(rt);
-			menu(rt->sdl, rt->save_filter);
+			//menu(rt->sdl, rt->save_filter);
 		}
 	}
 	if (rt->sdl->key_table[SDL_SCANCODE_S] && rt->sdl->save == 0)
@@ -95,7 +95,8 @@ void		clear_camera(t_rt *rt)
 		i++;
 	}
 	first_render(rt);
-	menu(rt->sdl, rt->save_filter);
+	rt->save_filter = 7;
+	//menu(rt->sdl, rt->save_filter);
 }
 
 void	enter_camera_position(t_rt *rt)
@@ -148,15 +149,61 @@ void	hooks(t_rt **r)
 		if (rt->hooks[1] < 1.0)
 			rt->hooks[1] += 0.1;
 		first_render(rt);
-		menu(rt->sdl, rt->save_filter);
+		//menu(rt->sdl, rt->save_filter);
 	}
 	if (rt->sdl->key_table[SDL_SCANCODE_J])
 	{
 		if (rt->hooks[1] > -1)
 			rt->hooks[1] -= .1;
 		first_render(rt);
-		menu(rt->sdl, rt->save_filter);
+		//menu(rt->sdl, rt->save_filter);
 	}
+	
+	if (rt->sdl->event.type == SDL_KEYDOWN && rt->save_filter != 1)
+	{
+		printf("pres\n");
+		if (rt->sdl->event.key.keysym.sym == SDLK_q && rt->save_filter != 0)
+		{
+			rt->save_filter = 0;
+			first_render(rt);
+		}
+		if (rt->sdl->event.key.keysym.sym == SDLK_w && rt->save_filter != 2)
+		{
+			rt->save_filter = 2;
+			first_render(rt);
+		}
+		if (rt->sdl->event.key.keysym.sym == SDLK_e && rt->save_filter != 3)
+		{
+			rt->save_filter = 3;
+			first_render(rt);
+		}
+		if (rt->sdl->event.key.keysym.sym == SDLK_r && rt->save_filter != 4)
+		{
+			rt->save_filter = 4;
+			first_render(rt);
+		}
+		if (rt->sdl->event.key.keysym.sym == SDLK_t && rt->save_filter != 1)
+		{
+			rt->save_filter = 1;
+			first_render(rt);
+		}
+		if (rt->sdl->event.key.keysym.sym == SDLK_y && rt->save_filter != 5)
+		{
+			rt->save_filter = 5;
+			first_render(rt);
+		}
+		if (rt->sdl->event.key.keysym.sym == SDLK_u && rt->save_filter != 6)
+		{
+			rt->save_filter = 6;
+			first_render(rt);
+		}
+		if (rt->sdl->event.key.keysym.sym == SDLK_i && rt->save_filter != 7)
+		{
+			rt->save_filter = 7;
+			first_render(rt);
+		}
+	}
+	else 
 	enter_camera_position(rt);
 }	
 

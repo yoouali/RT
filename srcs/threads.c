@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeddaqqa <aeddaqqa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 16:49:32 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/09 09:14:57 by aeddaqqa         ###   ########.fr       */
+/*   Updated: 2021/03/19 17:38:15 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void		draw_fourth_thread(t_rt *rt)
 		x = W / 2;
 		while (x < W)
 		{
-			if (rt->filters[0])
+			if (rt->save_filter == 0)
 				apply_antiliasing(rt, x, y);
 			else
 				draw_scene(rt, x, y);
@@ -118,6 +118,6 @@ void			first_render(t_rt *rt)
 	SDL_WaitThread(tab[2], &thread_return_value[2]);
 	SDL_WaitThread(tab[3], &thread_return_value[3]);
 	render(rt->sdl, rt);
-	menu(rt->sdl, rt->save_filter);
+	// menu(rt->sdl, rt->save_filter);
 	rt->sdl->loop = 1;
 }
