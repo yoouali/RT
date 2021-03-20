@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 11:47:47 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/19 08:53:07 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/20 15:33:54 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,15 +256,17 @@ typedef struct	s_ray
 typedef struct	s_sdl
 {
 	SDL_Window		*win_ptr;
-	SDL_Window		*win_menu;
+	// SDL_Window		*win_menu;
 	SDL_Renderer	*ren_ptr;
-	SDL_Renderer	*ren_menu;
+	// SDL_Renderer	*ren_menu;
 	SDL_Texture		*tex_ptr;
+	SDL_Surface		*bstila;
+	int				*data_bstila;
 	TTF_Font		*font_p;
 	TTF_Font		*font_s;
 	int				loop;
 	SDL_Event		event;
-	char			*key_table;
+	// char			*key_table;
 	int				save;
 	int				*tex;
 	int				data[W * H];

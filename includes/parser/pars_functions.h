@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_functions.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeddaqqa <aeddaqqa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 23:14:56 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/09 11:34:42 by aeddaqqa         ###   ########.fr       */
+/*   Updated: 2021/03/20 15:32:51 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int				stock_cmp_objects(t_object *obj, int r, char *str);
 void			stock_slice(t_object *obj, char *str);
 int				cmp_with_objects(char *s, char **tab);
 void			stock_matter(t_object *obj, char *str);
+int				*convert_color(char *pixels, int w, int h, int bbp);
 /*
 ** ------------------------------{Init}-------------------------
 */
