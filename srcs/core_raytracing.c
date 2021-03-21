@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 12:21:03 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/19 14:46:47 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/21 11:41:06 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int			core(t_rt **r)
 			|| rt->sdl->event.type == SDL_QUIT)
 		return (0);
 	hooks(r);
-	//mouse_hook(r, &to_do);
+	mouse_hook(r, &to_do);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 14:23:39 by chzabakh          #+#    #+#             */
-/*   Updated: 2021/03/17 16:19:08 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/21 11:42:27 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void			cartoon_effect(int *img);
 void			sepia_effect(int *img);
 void			anaglyph_effect(int *img);
 void			blur_effect(int *img);
+int       	  compare_color(int   c1, int c2);
 
 void			image_create(int *img);
 void			img_neg(int *img);
