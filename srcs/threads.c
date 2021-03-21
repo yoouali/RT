@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 16:49:32 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/21 11:41:56 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/21 14:36:15 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		draw_first_thread(t_rt *rt)
 		x = 0;
 		while (x < W / 2)
 		{
-			if (rt->filters[0])
+			if (rt->save_filter == 0)
 				apply_antiliasing(rt, x, y);
 			else
 				draw_scene(rt, x, y);
@@ -46,7 +46,7 @@ static void		draw_second_thread(t_rt *rt)
 		x = 0;
 		while (x < W / 2)
 		{
-			if (rt->filters[0])
+			if (rt->save_filter == 0)
 				apply_antiliasing(rt, x, y);
 			else
 				draw_scene(rt, x, y);

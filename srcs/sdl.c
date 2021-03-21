@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 10:28:22 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/21 11:40:57 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/21 15:13:48 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_sdl			*init_sdl(void)
 	return (sdl);
 }
 
-int				re_calc(t_sdl *sdl, SDL_Event event)
+int				re_calc(t_sdl *sdl, SDL_Event event, t_rt *rt)
 {
 	int			x;
 	int			y;
@@ -65,7 +65,7 @@ int				re_calc(t_sdl *sdl, SDL_Event event)
 	SDL_GetMouseState(&x, &y);
 	z.a = (SDL_Rect){x, y, 1, 1};
 	i = 0;
-	 if (SDL_GetMouseFocus() == sdl->win_ptr)
+	if (SDL_GetMouseFocus() == sdl->win_ptr)
 	{
 		i = 0;
 		while (i < 6)
@@ -75,7 +75,11 @@ int				re_calc(t_sdl *sdl, SDL_Event event)
 				break ;
 			i++;
 		}
-	 }
+		z.b = (SDL_Rect){206, 4, 40, 40};
+		if (SDL_IntersectRect(&z.a, &z.b, &z.c) == SDL_TRUE && event.type\
+		== SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
+				image_create(rt->sdl->data);
+	}
 	if (i < 6 && event.type == SDL_MOUSEBUTTONDOWN && event.button.button \
 			== SDL_BUTTON_LEFT)
 		return (i);
@@ -108,10 +112,8 @@ void			copy_bstila(t_sdl *sdl, int filter)
 		}
 		ind.i++;
 	}
-	printf("filter number: %d \n", filter);
 	if (filter >= 0 && filter <= 5)
 	{
-	printf("chenge frame\n");
 	ind.i = 11;
 	while (ind.i < 11 + 180)
 	{
@@ -159,11 +161,7 @@ void			destroy_sdl(t_sdl **s)
 
 	sdl = *s;
 	SDL_DestroyRenderer(sdl->ren_ptr);
-	//SDL_DestroyRenderer(sdl->ren_menu);
 	SDL_DestroyWindow(sdl->win_ptr);
-	//SDL_DestroyWindow(sdl->win_menu);
-	//TTF_CloseFont(sdl->font_p);
-	//TTF_CloseFont(sdl->font_s);
 	TTF_Quit();
 	SDL_Quit();
 	free(sdl);
