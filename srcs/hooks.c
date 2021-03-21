@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 16:49:08 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/21 15:00:51 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/21 16:46:32 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,20 @@ void	hooks2(t_rt **r)
 // 	}
  }
 
-void	next_cam(t_rt **r)
+void	next_cam(t_rt *rt, int dir)
 {
-	t_rt *rt;
-
-	rt = *r;
+	if (rt->cameras->next && dir == 0)
+	{
+		rt->cameras = rt->cameras->next;
+		new_camera(rt);
+		first_render(rt);
+	}
+	if (rt->cameras->prev && dir == 1)
+	{
+		rt->cameras = rt->cameras->prev;
+		new_camera(rt);
+		first_render(rt);
+	}
 	// if (rt->sdl->key_table[SDL_SCANCODE_O])
 	// {
 	// 	if (rt->cameras->next)
@@ -69,7 +78,7 @@ void	next_cam(t_rt **r)
 	// 	printf("%c key released\n", (char)rt->sdl->event.key.keysym.sym);
 	// 	rt->sdl->save = 0;
 	// }
-	hooks2(r);
+	// hooks2(r);
 }
 
 void		clear_camera(t_rt *rt)
