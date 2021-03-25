@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 10:28:22 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/21 16:46:25 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/25 09:47:45 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,9 @@ t_sdl			*init_sdl(void)
 	if (!(sdl = malloc(sizeof(t_sdl))))
 		return (NULL);
 	SDL_Init(SDL_INIT_EVERYTHING);
-	// TTF_Init();
-	// sdl->font_p = TTF_OpenFont(\
-	// 		"./resources/great-vibes/GreatVibes-Regular.otf", 100);
-	// if (!sdl->font_p)
-	// 	return (NULL);
-	// sdl->font_s = TTF_OpenFont("./resources/lato/Lato-Medium.ttf", 36);
-	// if (!sdl->font_s)
-	// 	return (NULL);
-	// sdl->win_menu = SDL_CreateWindow("menu", 480, 320, 400, 800, 0);
 	sdl->win_ptr = SDL_CreateWindow("Rt", SDL_WINDOWPOS_UNDEFINED, \
 			SDL_WINDOWPOS_UNDEFINED, WID, HEI, 0);
 	sdl->ren_ptr = SDL_CreateRenderer(sdl->win_ptr, -1, 0);
-	//sdl->ren_menu = SDL_CreateRenderer(sdl->win_menu, -1, 0);
 	sdl->tex_ptr = SDL_CreateTexture(sdl->ren_ptr, SDL_PIXELFORMAT_ARGB8888,
 	SDL_TEXTUREACCESS_STREAMING, WID, HEI);
 	if (!(sdl->bstila = IMG_Load("bstila.png")))
@@ -42,7 +32,19 @@ t_sdl			*init_sdl(void)
 		printf("dfdf\n");
 		exit(0);
 	}
+	if (!(sdl->magana = IMG_Load("magana.png")))
+	{
+		printf("magana\n");
+		exit(0);
+	}
+	if (!(sdl->savemes = IMG_Load("savemes.png")))
+	{
+		printf("magana\n");
+		exit(0);
+	}
 	sdl->data_bstila = convert_color((char*)sdl->bstila->pixels, sdl->bstila->w, sdl->bstila->h, sdl->bstila->format->BytesPerPixel);
+	sdl->data_magana = convert_color((char*)sdl->magana->pixels, sdl->magana->w, sdl->magana->h, sdl->magana->format->BytesPerPixel);
+	sdl->data_savemes = convert_color((char*)sdl->savemes->pixels, sdl->savemes->w, sdl->savemes->h, sdl->savemes->format->BytesPerPixel);
 	sdl->save = 0;
 	sdl->text[0] = malloc(sizeof(char) * 5);
 	sdl->text[1] = malloc(sizeof(char) * 5);
@@ -65,7 +67,7 @@ int				re_calc(t_sdl *sdl, SDL_Event event, t_rt *rt)
 	SDL_GetMouseState(&x, &y);
 	z.a = (SDL_Rect){x, y, 1, 1};
 	i = 0;
-	if (SDL_GetMouseFocus() == sdl->win_ptr)
+	 if (SDL_GetMouseFocus() == sdl->win_ptr)
 	{
 		i = 0;
 		while (i < 6)
@@ -78,7 +80,7 @@ int				re_calc(t_sdl *sdl, SDL_Event event, t_rt *rt)
 		z.b = (SDL_Rect){206, 4, 40, 40};
 		if (SDL_IntersectRect(&z.a, &z.b, &z.c) == SDL_TRUE && event.type\
 		== SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
-				image_create(rt->sdl->data);
+				loading_savemess(sdl, rt);
 		z.b = (SDL_Rect){30, 45, 50, 26};
 		if (SDL_IntersectRect(&z.a, &z.b, &z.c) == SDL_TRUE && event.type\
 		== SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
@@ -87,10 +89,12 @@ int				re_calc(t_sdl *sdl, SDL_Event event, t_rt *rt)
 		if (SDL_IntersectRect(&z.a, &z.b, &z.c) == SDL_TRUE && event.type\
 		== SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
 			next_cam(rt, 0);
-	}
+	 }
 	if (i < 6 && event.type == SDL_MOUSEBUTTONDOWN && event.button.button \
 			== SDL_BUTTON_LEFT)
+	{
 		return (i);
+	}
 	return (-1);
 }
 
@@ -128,13 +132,105 @@ void			copy_bstila(t_sdl *sdl, int filter)
 		ind.j = 456 + (filter * 65);
 		while (ind.j < 456 + (filter * 65) + 60)
 		{
-			if (compare_color(sdl->frame[WID * ind.j + ind.i], 0xc4c4c4))
+			if (compare_color(sdl->frame[WID * ind.j + ind.i], 0x46484C))
 				sdl->frame[WID * ind.j + ind.i] = 0xffffffff;
 			ind.j++;
 		}
 		ind.i++;
 	}
 	}
+}
+
+void			render_loading_frame(t_sdl	*sdl, t_rt *rt)
+{
+	t_ind	ind;
+
+	ind.i = 954;
+	while (ind.i - 954 < 40)
+	{
+		ind.j = 4;
+		while (ind.j - 4 < 40)
+		{
+			sdl->frame[WID * ind.j + ind.i] = sdl->data_magana[40 * (ind.j - 4) + (ind.i - 954)];
+			ind.j++;
+		}
+		ind.i++;
+	}
+	if (rt->save_filter != 8 && rt->save_filter >= 0)
+		loading_messages(sdl, rt->save_filter);
+	SDL_RenderClear(sdl->ren_ptr);
+	SDL_UpdateTexture(sdl->tex_ptr, NULL, sdl->frame, WID * 4);
+	SDL_RenderCopy(sdl->ren_ptr, sdl->tex_ptr, NULL, NULL);
+	SDL_RenderPresent(sdl->ren_ptr);
+}
+
+void			loading_messages(t_sdl *sdl, int  key)
+{
+	SDL_Surface		*surface;
+	int				*tab;
+	char			*str;
+	t_ind			ind;
+
+	printf("lhtba 2\n");
+	if (key == 0)
+		str = "antialiasing.png";
+	else if (key == 1)
+		str = "cartoon.png";
+	else if (key == 2)
+		str = "blur.png";
+	else if (key == 3)
+		str = "sepia.png";
+	else if (key == 4)
+		str = "grey.png";
+	else if (key == 5)
+		str = "stereoscopy.png";
+	surface = NULL;
+	if (!(surface = IMG_Load(str)))
+	{
+		exit(0);
+	}
+	tab = convert_color((char*)surface->pixels, surface->w, surface->h, surface->format->BytesPerPixel);
+	ind.i = 725;
+	while (ind.i - 725 < 220)
+	{
+		ind.j = 4;
+		while (ind.j - 4 < 40)
+		{
+			sdl->frame[WID * ind.j + ind.i] = tab[220 * (ind.j - 4) + (ind.i - 725)];
+			ind.j++;
+		}
+		ind.i++;
+	}
+}
+
+void			loading_savemess(t_sdl *sdl, t_rt *rt)
+{
+	t_ind	ind;
+	t_col	col1;
+	t_col	col2;
+
+	ind.i = 500;
+	image_create(sdl->data);
+	while (ind.i - 500 < 287)
+	{
+		ind.j = 730;
+		while (ind.j - 730 < 63)
+		{
+			col1 = int_to_rgb_yatak(sdl->frame[WID * ind.j + ind.i]);
+			col2 = int_to_rgb_yatak(sdl->data_savemes[287 * (ind.j - 730) + (ind.i - 500)]);
+			col1 = alpha_compositing(col1, col2, 1, 0.5);
+			sdl->frame[WID * ind.j + ind.i] = rgb_to_int_yatak(col1);
+			ind.j++;
+		}
+		ind.i++;
+	}
+	SDL_RenderClear(sdl->ren_ptr);
+	SDL_UpdateTexture(sdl->tex_ptr, NULL, sdl->frame, WID * 4);
+	SDL_RenderCopy(sdl->ren_ptr, sdl->tex_ptr, NULL, NULL);
+	SDL_RenderPresent(sdl->ren_ptr);
+	SDL_Delay(100);
+	render_loading_frame(sdl, rt);
+	first_render(rt);
 }
 
 void			render(t_sdl *sdl, t_rt *rt)

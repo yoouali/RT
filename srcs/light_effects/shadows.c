@@ -6,7 +6,7 @@
 /*   By: nabouzah <nabouzah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 19:15:58 by nabouzah          #+#    #+#             */
-/*   Updated: 2021/03/07 11:43:52 by nabouzah         ###   ########.fr       */
+/*   Updated: 2021/03/20 17:43:50 by nabouzah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int				cmp_vect(t_vect3 lhs, t_vect3 rhs)
 	return (0);
 }
 
-int				in_shadow(t_rt *rt, t_light *light, t_object *object)
+double			in_shadow(t_rt *rt, t_light *light, t_object *object)
 {
 	t_object	*obj;
 	t_object	o;
@@ -39,11 +39,11 @@ int				in_shadow(t_rt *rt, t_light *light, t_object *object)
 			shadow.hit_point = v_c_prod(shadow.direction, t);
 			distance = sqrtf(dot(shadow.hit_point, shadow.hit_point));
 			if (distance < light->d && !obj->is_transp)
-				return (0);
-			else if (obj->is_transp)
+				return (1 - fabs(dot(shadow.direction, object->normal)));
+			else if (distance < light->d && obj->is_transp)
 				light->intensity *= obj->is_transp;
 		}
 		obj = obj->next;
 	}
-	return (1);
+	return (1.0);
 }

@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 12:33:01 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/21 16:10:13 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/24 14:58:32 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void			test_obj(t_stk *w, t_point *tab, int j);
 **		lights
 */
 t_color			specular(t_light *l, t_ray *ray, t_object *object);
-int				in_shadow(t_rt *rt, t_light *light, t_object *object);
+double				in_shadow(t_rt *rt, t_light *light, t_object *object);
 t_color			ambient(t_object *obj, double amb);
 t_color			diffuse(t_light *light, double n_l, t_object *object);
 t_color			multip_color(t_color c1, t_color c2);
@@ -101,5 +101,8 @@ t_color			is_direct_light(t_rt *rt, t_ray ray, double t);
 int				parallel_light(t_ray r, t_light light);
 void			set_matter(t_object *o);
 void			next_cam(t_rt *rt, int dir);
+void			render_loading_frame(t_sdl	*sdl, t_rt *rt);
+void			loading_savemess(t_sdl *sdl, t_rt *rt);
+void			loading_messages(t_sdl *sdl, int  key);
 
 #endif

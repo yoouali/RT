@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/24 18:48:55 by ahkhilad          #+#    #+#             */
-/*   Updated: 2021/03/17 16:10:46 by ayagoumi         ###   ########.fr       */
+/*   Created: 2021/03/20 14:25:52 by ayagoumi          #+#    #+#             */
+/*   Updated: 2021/03/20 19:04:35 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,29 +42,45 @@
 
 double			hit_triangle(t_object *triangle, t_ray *r)
 {
+	t_intersect inter;
+	t_vect3 origin_minus_v0, cross_raydir_edge2, cross_ori_edge1;
+	double det, inv_det;
+	double u;
+	double v;
 	t_tri		tr;
-	t_intersect	i;
-	double		det;
-	double		inv_det;
 
-	tr.ba = vect_sub(triangle->point_b, triangle->point_a);
 	tr.ca = vect_sub(triangle->point_c, triangle->point_a);
-	tr.qb = cross(r->direction, tr.ca);
-	det = dot(tr.ba, tr.qb);
+	tr.ba = vect_sub(triangle->point_b, triangle->point_a);
+	t_vect3 surface_normal = normalize(cross(tr.ba, tr.ca));
+	double i  = dot(r->direction, surface_normal);
+	if (i < 0)
+	{
+		t_vect3 tmp;
+		tmp = tr.ba;
+		tr.ba = tr.ca;
+		tr.ca = tmp;
+	}
+
+	cross_raydir_edge2 = cross(r->direction, tr.ba);
+	det = dot(tr.ca, cross_raydir_edge2);
 	if (det < 0.00001)
 		return (-1);
-	tr.q = vect_sub(r->origin, triangle->point_a);
-	i.t1 = dot(tr.q, tr.qb);
-	if (i.t1 < 0.0 || i.t1 > det)
+
+	origin_minus_v0 = vect_sub(r->origin, triangle->point_a);
+	u = dot(origin_minus_v0, cross_raydir_edge2);
+	if (u < 0.0 || u > det)
 		return (-1);
-	tr.qa = cross(tr.q, tr.ba);
-	i.t2 = dot(r->direction, tr.qa);
-	if (i.t2 < 0.0 || i.t1 + i.t2 > det)
+
+	cross_ori_edge1 = cross(origin_minus_v0, tr.ca);
+	v = dot(r->direction, cross_ori_edge1);
+	if (v < 0.0 || u + v > det)
 		return (-1);
-	i.t = dot(tr.ca, tr.qa);
+
+	inter.t = dot(tr.ba, cross_ori_edge1);
+
 	inv_det = 1.0 / det;
-	i.t1 *= inv_det;
-	i.t2 *= inv_det;
-	i.t *= inv_det;
-	return (slice_obj(*triangle, *r, i.t));
+	u *= inv_det;
+	v *= inv_det;
+	inter.t *= inv_det;
+	return (inter.t);
 }

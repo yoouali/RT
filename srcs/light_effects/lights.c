@@ -6,7 +6,7 @@
 /*   By: nabouzah <nabouzah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 05:10:29 by nabouzah          #+#    #+#             */
-/*   Updated: 2021/03/08 18:45:42 by nabouzah         ###   ########.fr       */
+/*   Updated: 2021/03/18 17:54:10 by nabouzah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				parallel_light(t_ray r, t_light light)
 t_color			shade(t_rt *rt, t_light li, t_object obj, t_ray r)
 {
 	double	n_l;
-	int		shadow;
+	double	shadow;
 	int		parallel;
 	t_color	color;
 

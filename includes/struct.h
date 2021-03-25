@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 11:47:47 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/21 11:42:19 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/25 09:48:06 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ typedef struct	s_object
 	t_intersect		sph;
 	t_intersect		cyl;
 	t_intersect		cne;
+	t_intersect		elip;
 	int				id;
 	t_matter		matter;
 	t_tex			*texture;
@@ -289,6 +290,10 @@ typedef struct	s_sdl
 	SDL_Texture		*tex_ptr;
 	SDL_Surface		*bstila;
 	int				*data_bstila;
+	SDL_Surface		*magana;
+	int				*data_magana;
+	SDL_Surface		*savemes;
+	int				*data_savemes;
 	int				frame[WID * HEI];
 	int				loop;
 	SDL_Event		event;

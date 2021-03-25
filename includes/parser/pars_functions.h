@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 23:14:56 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/20 15:32:51 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/20 15:26:37 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int				stock_cmp_objects(t_object *obj, int r, char *str);
 void			stock_slice(t_object *obj, char *str);
 int				cmp_with_objects(char *s, char **tab);
 void			stock_matter(t_object *obj, char *str);
-int				*convert_color(char *pixels, int w, int h, int bbp);
 /*
 ** ------------------------------{Init}-------------------------
 */
@@ -91,6 +90,7 @@ int				check_for_box(int type, t_node n);
 int				check_for_parallelogram(int type, t_node n);
 int				check_for_triangle(int type, t_node n);
 int				check_for_disk(int type, t_node n);
+int				*convert_color(char *pixels, int w, int h, int bbp);
 /*
 ** ------------------------------{Util}-------------------------
 */
