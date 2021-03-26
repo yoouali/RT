@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 15:46:42 by chzabakh          #+#    #+#             */
-/*   Updated: 2021/03/23 14:33:49 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/26 08:31:38 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,43 @@ void	image_put(int *img, int file)
 	free(buf);
 }
 
+char	*strconcat(char *tmp)
+{
+	char	*str;
+	int		len;
+	t_ind	ind;
+
+	len = ft_strlen(tmp);
+	len += 4;
+	str = (char *)malloc(sizeof(char) * (len));
+	ind.i = 0;
+	ind.j = 0;
+	while (tmp[ind.i])
+	{
+		if (tmp[ind.i] != ' ')
+		{
+			str[ind.j] = tmp[ind.i];
+			ind.j++;
+		}
+		ind.i++;
+	}
+	return (straddbmp(str, ind));
+}
+
 void	image_create(int *img)
 {
 	t_image	image;
 	int		file;
 	char	*name;
 	char	*tmp;
-	time_t 	rawtime;
+	time_t	rawtime;
 
 	rawtime = time(NULL);
 	tmp = ctime(&rawtime);
-	name = ft_strtrim(tmp);
+	name = strconcat(tmp);
 	file = open(name, O_RDWR | O_CREAT, 777);
 	fill_data(&image);
 	image_header(&image, file);
 	image_put(img, file);
+	free(name);
 }

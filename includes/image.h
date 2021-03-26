@@ -6,7 +6,7 @@
 /*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 14:23:39 by chzabakh          #+#    #+#             */
-/*   Updated: 2021/03/21 11:33:26 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/26 08:32:24 by yoouali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ typedef	struct	s_dist
 {
 	double	dist;
 	double	distance;
+	t_col	col1;
+	t_col	col2;
+	t_ind	ind;
 }				t_dist;
 
 typedef struct	s_image
@@ -56,6 +59,7 @@ typedef struct	s_image
 	unsigned int	clr_important;
 }				t_image;
 
+
 int         	rgb_to_int_yatak(t_col col);
 t_col       	int_to_rgb_yatak(int val);
 t_col       	alpha_compositing(t_col c1, t_col c2, double a1, double a2);
@@ -66,9 +70,8 @@ void			cartoon_effect(int *img);
 void			sepia_effect(int *img);
 void			anaglyph_effect(int *img);
 void			blur_effect(int *img);
-int       	  compare_color(int   c1, int c2);
-
+int       	  	compare_color(int   c1, int c2);
 void			image_create(int *img);
-void			img_neg(int *img);
-void			antialiasing(int *img);
+char			*straddbmp(char *str, t_ind ind);
+
 #endif

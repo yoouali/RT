@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nabouzah <nabouzah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 11:47:47 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/25 09:48:06 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/26 12:46:59 by nabouzah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,20 +167,15 @@ typedef struct	s_cone
 
 typedef struct	s_tri
 {
-	t_vect3	x;
 	t_vect3	ca;
 	t_vect3	ba;
-	t_vect3	bc;
-	t_vect3	ab;
-	t_vect3	orientation;
-	t_vect3	q;
-	t_vect3	qa;
-	t_vect3	qb;
-	t_vect3	qc;
+	t_vect3	pvec;
+	t_vect3	qvec;
+	t_vect3	tvec;
+	t_vect3	surface_normal;
 	double	distance;
-	double	dist2plane;
-	double	a;
-	double	b;
+	double	det;
+	double	inv_det;
 }				t_tri;
 
 typedef struct	s_parallelo
@@ -239,11 +234,11 @@ typedef struct	s_object
 	double			refraction_index;
 	double			is_ref;
 	double			is_transp;
-	t_intersect		sph;
+	t_intersect		inter;
 	t_intersect		cyl;
-	t_intersect		cne;
-	t_intersect		elip;
+	t_tri			tri;
 	int				id;
+	int				slice_flag;
 	t_matter		matter;
 	t_tex			*texture;
 	t_vect3			slice_axis;
@@ -288,21 +283,17 @@ typedef struct	s_sdl
 	SDL_Window		*win_ptr;
 	SDL_Renderer	*ren_ptr;
 	SDL_Texture		*tex_ptr;
-	SDL_Surface		*bstila;
-	int				*data_bstila;
-	SDL_Surface		*magana;
-	int				*data_magana;
+	SDL_Surface		*frame_img;
+	int				*data_frame;
+	SDL_Surface		*loading;
+	int				*data_loading;
 	SDL_Surface		*savemes;
 	int				*data_savemes;
 	int				frame[WID * HEI];
 	int				loop;
 	SDL_Event		event;
-	int				save;
 	int				*tex;
 	int				data[W * H];
-	char			*text[3];
-	int				indtext;
-	int				enterind;
 }				t_sdl;
 
 typedef struct	s_rt

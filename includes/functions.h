@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 12:33:01 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/24 14:58:32 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/26 10:41:11 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ double			hit_plane(t_object *object, t_ray *ray);
 double			hit_triangle(t_object *triangle, t_ray *ray);
 double			hit_cylinder(t_object *object, t_ray *ray);
 double			hit_ellipsoid(t_object *elip, t_ray *ray);
-double			hit_box(t_object *box, t_ray *ray);
+double			hit_torus(t_object *torus, t_ray *r);
 double			hit_paraboloid(t_object *pa, t_ray *ray);
 double			hit_disk(t_object *disk, t_ray *ray);
 double			hit_parallelogram(t_object *para, t_ray *ray);
@@ -43,12 +43,12 @@ t_vect3			triangle_normal(t_object *object, t_ray *ray);
 t_vect3			cone_normal(t_object *cone, t_ray *ray);
 t_vect3			plane_normal(t_object *object, t_ray *ray);
 t_vect3			sphere_normal(t_object *obj, t_ray *ray);
-t_vect3			box_normal(t_object *box, t_ray *h);
 t_vect3			paraboloid_normal(t_object *object, t_ray *ray);
 t_vect3			normal_disk(t_object *disk, t_ray *ray);
 t_vect3			normal_parallelogram(t_object *para, t_ray *ray);
+t_vect3			torus_normal(t_object *obj, t_ray *ray);
 t_vect3			rotation_xyz(t_vect3 v, t_vect3 a);
-void			hooks(t_rt **r);
+void			hooks(t_rt *rt);
 void			mouse_hook(t_rt **r, int *to_do);
 void			apply_antiliasing(t_rt *rt, int x, int y);
 void			draw_scene(t_rt *rt, int x, int y);
@@ -62,7 +62,7 @@ void			test_obj(t_stk *w, t_point *tab, int j);
 **		lights
 */
 t_color			specular(t_light *l, t_ray *ray, t_object *object);
-double				in_shadow(t_rt *rt, t_light *light, t_object *object);
+int				in_shadow(t_rt *rt, t_light *light, t_object *object);
 t_color			ambient(t_object *obj, double amb);
 t_color			diffuse(t_light *light, double n_l, t_object *object);
 t_color			multip_color(t_color c1, t_color c2);
@@ -78,7 +78,6 @@ int				texture_clr(t_object **object, t_point hit, double tab[2]);
 /*
 **--------------------------++++++++++++++++++++++++++++++++++++
 */
-void			menu(t_sdl *sdl, int save);
 void			square(t_sdl *sdl, int x, int save);
 t_sdl			*init_sdl(void);
 void			destroy_sdl(t_sdl **s);
@@ -104,5 +103,6 @@ void			next_cam(t_rt *rt, int dir);
 void			render_loading_frame(t_sdl	*sdl, t_rt *rt);
 void			loading_savemess(t_sdl *sdl, t_rt *rt);
 void			loading_messages(t_sdl *sdl, int  key);
+void			copy_frame(t_sdl *sdl, int filter);
 
 #endif

@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nabouzah <nabouzah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 18:50:23 by ahkhilad          #+#    #+#             */
-/*   Updated: 2021/03/19 16:11:43 by ayagoumi         ###   ########.fr       */
+/*   Updated: 2021/03/24 14:29:46 by nabouzah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
 
-double		hit_plane(t_object *object, t_ray *ray)
+double		hit_plane(t_object *plane, t_ray *ray)
 {
-	t_intersect		i;
-
-	object->orientation = normalize(object->orientation);
-	i.oc = vect_sub(ray->origin, object->position);
-	i.a = dot(i.oc, object->orientation);
-	i.b = dot(ray->direction, object->orientation);
-	if (i.b == 0 || i.a * i.b >= 0)
+	plane->orientation = normalize(plane->orientation);
+	plane->inter.oc = vect_sub(ray->origin, plane->position);
+	plane->inter.a = dot(plane->inter.oc, plane->orientation);
+	plane->inter.b = dot(ray->direction, plane->orientation);
+	if (plane->inter.b == 0 || plane->inter.a * plane->inter.b >= 0)
 		return (-1.0);
-	i.t = -i.a / i.b;
-	return (slice_obj(*object, *ray, i.t));
+	ray->t = -plane->inter.a / plane->inter.b;
+	plane->inter.t = ray->t;
+	return (plane->inter.t);
 }

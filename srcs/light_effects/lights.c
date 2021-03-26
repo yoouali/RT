@@ -6,7 +6,7 @@
 /*   By: nabouzah <nabouzah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 05:10:29 by nabouzah          #+#    #+#             */
-/*   Updated: 2021/03/18 17:54:10 by nabouzah         ###   ########.fr       */
+/*   Updated: 2021/03/26 13:11:30 by nabouzah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,26 @@ t_color			shade(t_rt *rt, t_light li, t_object obj, t_ray r)
 {
 	double	n_l;
 	double	shadow;
+	double	distance;
 	int		parallel;
 	t_color	color;
 
 	n_l = dot(obj.normal, li.direction);
 	color = (t_color){0.0, 0.0, 0.0};
+	distance = sqrtf(dot(r.hit_point, r.hit_point));
 	r.refraction_index = obj.refraction_index;
-	if (n_l > 0)
-		color = vect_add(color, diffuse(&li, n_l, &obj));
-	color = add_color(color, specular(&li, &r, &obj));
-	color = add_color(color,\
-	fraction(reflex_col(rt, r, &obj, &li), obj.is_ref));
 	shadow = in_shadow(rt, &li, &obj);
 	parallel = parallel_light(r, li);
-	color = add_color(color,\
-	fraction(refract_color(rt, r, &obj, &li), obj.is_transp));
+	if (n_l > 0)
+		color = vect_add(color, diffuse(&li, n_l, &obj));
+	if (shadow == 1)
+	{
+		color = add_color(color, specular(&li, &r, &obj));
+		color = add_color(color,\
+		fraction(reflex_col(rt, r, &obj, &li), obj.is_ref));
+		color = add_color(color,\
+		fraction(refract_color(rt, r, &obj, &li), obj.is_transp));
+	}
 	color = fraction(color, parallel * shadow * li.intensity);
 	return (color);
 }
@@ -87,7 +92,8 @@ int				light(t_object *close_obj, t_ray *ray, t_rt *rt, double t)
 	ray->reflect_nb = 0;
 	ray->refraction_index = 1;
 	ray->t = t;
-	close_obj->normal = rt->normal[close_obj->type](close_obj, ray);
+	close_obj->normal =
+	v_c_prod(rt->normal[close_obj->type](close_obj, ray) ,close_obj->slice_flag);
 	if (close_obj->texture->type != NONE && (close_obj->type == SPHERE ||\
 	close_obj->type == CYLINDER || close_obj->type == CONE ||\
 	close_obj->type == PLANE))
