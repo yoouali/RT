@@ -6,7 +6,7 @@
 /*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:59:27 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/26 10:08:21 by ayagoumi         ###   ########.fr       */
+/*   Updated: 2021/03/29 09:17:03 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	init_normal(t_rt *new)
 	new->normal[7] = paraboloid_normal;
 	new->normal[8] = triangle_normal;
 	new->normal[9] = torus_normal;
-	new->normal[10] = NULL;
-	new->normal[11] = normal_disk;
+	new->normal[10] = normal_disk;
+	new->normal[11] = NULL;
 }
 
 static void	init_intersections(t_rt *new)
@@ -40,17 +40,16 @@ static void	init_intersections(t_rt *new)
 	new->intersection[7] = hit_paraboloid;
 	new->intersection[8] = hit_triangle;
 	new->intersection[9] = hit_torus;
-	new->intersection[10] = NULL;
-	new->intersection[11] = hit_disk;
+	new->intersection[10] = hit_disk;
+	new->intersection[11] = NULL;
 }
 
-t_rt		*init_rt(bool save)
+t_rt		*init_rt(void)
 {
 	t_rt	*new;
 
 	if (!(new = malloc(sizeof(t_rt))))
 		return (NULL);
-	new->save = save;
 	new->cameras = NULL;
 	new->lights = NULL;
 	new->objects = NULL;

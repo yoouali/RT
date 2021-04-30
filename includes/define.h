@@ -6,7 +6,7 @@
 /*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 11:46:46 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/24 19:06:30 by ayagoumi         ###   ########.fr       */
+/*   Updated: 2021/03/29 10:04:54 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,12 @@
 # define W 800
 # define H 800
 # define WID 1000
-#define HEI 850
+# define HEI 850
 # define DIFFUSE 1.0
 # define SPECULER 1.0
 # define MAX_REF 3
 # define EQN_EPS 1e-9
 # define EPSILLON 1e-6
-# define IS_ZERO(x) ((x) > -EQN_EPS && (x) < EQN_EPS)
-# ifndef CBRT
-#  define POW1(x) (pow((double)(x), 1.0 / 3.0))
-#  define POW2(x) (pow((double)-(x), 1.0 / 3.0))
-#  define CBRT(x) ((x) > 0.0 ? POW1(x) : ((x) < 0.0 ? -POW2(x) : 0.0))
-# endif
 
 typedef enum	e_error
 {
@@ -77,7 +71,6 @@ typedef	enum	e_type
 	PARABOLOID,
 	TRIANGLE,
 	TORUS,
-	PARALLELOGRAM,
 	DISK,
 	AMBIENT
 }				t_type;

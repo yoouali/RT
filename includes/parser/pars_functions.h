@@ -6,7 +6,7 @@
 /*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 23:14:56 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/25 09:02:19 by ayagoumi         ###   ########.fr       */
+/*   Updated: 2021/03/29 10:48:22 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			stock_matter(t_object *obj, char *str);
 ** ------------------------------{Init}-------------------------
 */
 
-t_rt			*init_rt(bool save);
+t_rt			*init_rt(void);
 t_tags			init_tab_tags(void);
 void			init_ctags_follow_up(t_tags *tags);
 void			init_ctags_cmp(t_tags *tags);
@@ -64,7 +64,6 @@ void			valid_cmp_for_cylinder(t_node *n, int type);
 void			valid_cmp_for_paraboloid(t_node *n, int type);
 void			valid_cmp_for_torus(t_node *n, int type);
 void			valid_cmp_for_ellipsoid(t_node *n, int type);
-void			valid_cmp_for_parallelogram(t_node *n, int type);
 void			valid_cmp_for_triangle(t_node *n, int type);
 void			valid_cmp_for_disk(t_node *n, int type);
 int				all_cmp_valid_for_paraboloid(t_node n);
@@ -75,7 +74,6 @@ int				all_cmp_valid_for_sphere(t_node n);
 int				all_cmp_valid_for_torus(t_node n);
 int				all_cmp_valid_for_ellipsoid(t_node n);
 int				all_cmp_valid_for_torus(t_node n);
-int				all_cmp_valid_for_parallelogram(t_node n);
 int				all_cmp_valid_for_triangle(t_node n);
 int				all_cmp_valid_for_disk(t_node n);
 int				check_for_sphere(int type, t_node n);
@@ -86,7 +84,6 @@ int				check_for_paraboloid(int type, t_node n);
 int				check_for_ellipsoid(int type, t_node n);
 int				check_for_torus(int type, t_node n);
 int				check_for_torus(int type, t_node n);
-int				check_for_parallelogram(int type, t_node n);
 int				check_for_triangle(int type, t_node n);
 int				check_for_disk(int type, t_node n);
 int				*convert_color(char *pixels, int w, int h, int bbp);
@@ -107,5 +104,7 @@ int				len_tab_2d(char **tab);
 /*
 **{--------------------------------------------------------------}
 */
+
+t_vect3			rotation_xyz(t_vect3 v, t_vect3 a);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 05:49:45 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/24 19:07:41 by ayagoumi         ###   ########.fr       */
+/*   Updated: 2021/03/29 12:54:02 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int		all_cmp_validforobjects(t_node n)
 		return (all_cmp_valid_for_triangle(n));
 	else if (n.type == TORUS)
 		return (all_cmp_valid_for_torus(n));
-	else if (n.type == PARALLELOGRAM)
-		return (all_cmp_valid_for_parallelogram(n));
 	else if (n.type == DISK)
 		return (all_cmp_valid_for_disk(n));
 	return (-1);
@@ -56,8 +54,10 @@ int		all_cmp_valid(t_node n)
 	return (1);
 }
 
-int		return_val(t_node n, char *comp)
+int		return_val(t_node n, char *comp, int err)
 {
+	if (err == -1)
+		return (-1);
 	ft_strdel(&comp);
 	return (all_cmp_valid(n));
 }
@@ -79,11 +79,11 @@ int		stock_elements_cmp(char *s, t_tags tags, t_rt *rt, int *i)
 	if (!(comp = get_tag(&s[*i], i)))
 		return (-1);
 	if (!ft_strcmp(comp, tags.elements_c[rt->node.type]))
-		return (return_val(rt->node, comp));
+		return (return_val(rt->node, comp, 0));
 	if ((r = check_openning_elem(comp, tags.components_o)) < 0)
-		return (return_val(rt->node, comp));
+		return (return_val(rt->node, comp, -1));
 	if ((check_components_exist(rt->node, r)) == -1)
-		return (return_val(rt->node, comp));
+		return (return_val(rt->node, comp, 0));
 	valid_cmp(&rt->node, r);
 	ft_strdel(&comp);
 	if ((!(content = inner_text(&s[*i], i))) ||\

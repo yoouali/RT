@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nabouzah <nabouzah@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 11:47:47 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/26 12:46:59 by nabouzah         ###   ########.fr       */
+/*   Updated: 2021/03/29 09:58:25 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,29 +142,6 @@ typedef struct	s_intersect
 	t_vect3	oc;
 }				t_intersect;
 
-typedef struct	s_delta
-{
-	double	a;
-	double	b;
-	double	c;
-	double	disc;
-	double	delta;
-}				t_delta;
-
-typedef struct	s_cone
-{
-	t_delta	d;
-	t_vect3	pa;
-	t_vect3	va;
-	t_vect3	x;
-	t_vect3	a;
-	t_vect3	b;
-	float	anglesin;
-	float	t1;
-	float	t2;
-	float	anglecos;
-}				t_cone;
-
 typedef struct	s_tri
 {
 	t_vect3	ca;
@@ -177,30 +154,6 @@ typedef struct	s_tri
 	double	det;
 	double	inv_det;
 }				t_tri;
-
-typedef struct	s_parallelo
-{
-	t_vect3	e01;
-	t_vect3	e03;
-	t_vect3	e23;
-	t_vect3	e21;
-	t_vect3	p;
-	t_vect3	p2;
-	t_vect3	t;
-	t_vect3	t2;
-	t_vect3	q;
-	t_vect3	q2;
-	t_vect3	n;
-	double	det;
-	double	det2;
-	double	invdet;
-	double	invdet2;
-	double	t1;
-	double	a;
-	double	b;
-	double	a2;
-	double	b2;
-}				t_parallelo;
 
 typedef struct	s_tex
 {
@@ -241,10 +194,8 @@ typedef struct	s_object
 	int				slice_flag;
 	t_matter		matter;
 	t_tex			*texture;
-	t_vect3			slice_axis;
-	t_vect3			slice_oaxis;
-	bool			slice_axis_check;
-	bool			slice_oaxis_check;
+	t_vect3			slice;
+	bool			slice_check;
 	struct s_object	*next;
 }				t_object;
 
@@ -298,7 +249,6 @@ typedef struct	s_sdl
 
 typedef struct	s_rt
 {
-	bool			save;
 	int				number_id;
 	t_sdl			*sdl;
 	t_object		*objects;

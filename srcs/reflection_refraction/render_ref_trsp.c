@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ref_trsp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeddaqqa <aeddaqqa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 09:29:47 by nabouzah          #+#    #+#             */
-/*   Updated: 2021/03/07 16:43:51 by aeddaqqa         ###   ########.fr       */
+/*   Updated: 2021/03/29 13:47:35 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_vect3	lit_comp(t_rt *rt, t_light light, t_object *object, t_ray *ray)
 {
 	t_vect3 color;
-	float	n_l;
+	double	n_l;
 
 	if (object->texture->type != NONE && (object->type == SPHERE ||\
 	object->type == CYLINDER || object->type == CONE ||\
@@ -37,41 +37,44 @@ static t_vect3	lit_comp(t_rt *rt, t_light light, t_object *object, t_ray *ray)
 static t_object	*refintrsct(t_rt *rt, t_ray *ray, t_object *node)
 {
 	double			x;
-	t_object		*close;
-	t_object		*tmp;
+	t_object		*close_tmp[2];
 	t_object		o;
 
-	tmp = rt->objects;
-	close = NULL;
+	close_tmp[1] = rt->objects;
+	close_tmp[0] = NULL;
 	ray->t = -1.0;
 	x = -1;
-	while (tmp)
+	while (close_tmp[1])
 	{
-		copy_obj(&o, tmp);
+		copy_obj(&o, close_tmp[1]);
 		if (node->id != o.id)
 		{
-			x = rt->intersection[o.type](&o, ray);
-			if (x > 0 && (x < ray->t || ray->t < 0))
+			rt->intersection[o.type](&o, ray);
+			ray->t = slice_obj(close_tmp[1], *ray, ray->t);
+			if (ray->t > 1e-5 && (x > ray->t || x == -1))
 			{
-				close = tmp;
-				ray->t = x;
+				close_tmp[0] = close_tmp[1];
+				x = ray->t;
 			}
 		}
-		tmp = tmp->next;
+		close_tmp[1] = close_tmp[1]->next;
 	}
-	return (close);
+	ray->t = x;
+	return (close_tmp[0]);
 }
 
 t_color			ref_trsp(t_rt *rt, t_object *obj, t_ray reflect, t_light *light)
 {
+	t_object	o;
 	t_object	*close;
 
 	if ((close = refintrsct(rt, &reflect, obj)) && reflect.t != -1)
 	{
 		reflect.hit_point = vect_add(reflect.origin,\
 		v_c_prod(reflect.direction, reflect.t));
-		close->normal = rt->normal[close->type](close, &reflect);
-		return (lit_comp(rt, *light, close, &reflect));
+		copy_obj(&o, close);
+		o.normal = rt->normal[o.type](&o, &reflect);
+		return (lit_comp(rt, *light, &o, &reflect));
 	}
 	return ((t_color){0, 0, 0});
 }

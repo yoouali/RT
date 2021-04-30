@@ -6,7 +6,7 @@
 /*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 05:39:07 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/26 10:24:34 by ayagoumi         ###   ########.fr       */
+/*   Updated: 2021/03/29 12:32:11 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,9 @@ void				add_front(t_rt **r, void *new, int type)
 	else if (type == 5)
 		add_front_light(&rt->lights, new);
 	else
+	{
+		if (type != AMBIENT)
+			((t_object*)new)->type = type;
 		add_front_obj(&rt->objects, new);
+	}
 }

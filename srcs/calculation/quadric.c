@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quadric.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 15:56:18 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/06/14 16:51:29 by ebatchas         ###   ########.fr       */
+/*   Updated: 2021/03/29 10:05:38 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_solve_quadric(double c[3], double s[2])
 	p = c[1] / (2.0 * c[2]);
 	q = c[0] / c[2];
 	d = p * p - q;
-	if (IS_ZERO(d))
+	if (is_zero(d))
 	{
 		s[0] = -p;
 		return (1);

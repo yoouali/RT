@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoouali <yoouali@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayagoumi <ayagoumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 23:16:14 by aeddaqqa          #+#    #+#             */
-/*   Updated: 2021/03/19 17:35:31 by yoouali          ###   ########.fr       */
+/*   Updated: 2021/03/29 12:54:41 by ayagoumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,49 @@ void	syntax_err(t_rt *rt, char *file)
 	exit(0);
 }
 
-void	err(int ac, char **av, t_rt *rt, char *file)
+void	err2(char **av, t_rt *rt, char *file, char *ex)
+{
+	if (!ft_strcmp(ex, ".xml"))
+	{
+		if (!(file = load_file(av[1])))
+		{
+			free_rt(&rt);
+			exit(0);
+		}
+		if (!(parse(file, rt)))
+			syntax_err(rt, file);
+		free(file);
+	}
+	else if (!ft_strcmp(".obj", ex))
+	{
+		if (!(parse_obj(rt, av[1])))
+		{
+			free_rt(&rt);
+			exit(0);
+		}
+	}
+	else
+	{
+		free_rt(&rt);
+		exit(0);
+	}
+}
+
+void	err(char **av, t_rt *rt, char *file)
 {
 	char *ex;
 
 	ex = ft_strrchr(av[1], '.');
 	if (!ex)
 		exit(0);
-	if (!(rt = init_rt(ac - 2)))
+	if (!(rt = init_rt()))
 		destroy(MALLOC_ERROR);
-	if (!ft_strcmp(ex, ".xml"))
-	{
-		if (!(file = load_file(av[1])))
-			exit(0);
-		if (!(parse(file, rt)))
-			syntax_err(rt, file);
-	}
-	else if (!ft_strcmp(".obj", ex))
-	{
-		if (!(parse_obj(rt, av[1])))
-			exit(0);
-	}
-	else
-		syntax_err(rt, file);
-	free(file);
+	err2(av, rt, file, ex);
 	new_camera(rt);
 	rt->sdl = init_sdl();
 	rt->save_filter = 7;
-	(rt->sdl) ? rtrace(rt) : free_rt(&rt);
+	rtrace(rt);
+	free_rt(&rt);
 }
 
 int		main(int ac, char **av)
@@ -57,15 +72,8 @@ int		main(int ac, char **av)
 
 	file = NULL;
 	rt = NULL;
-	if (ac == 2 || ac == 3)
-	{
-		if (ac == 3 && ft_strcmp(av[2], "--save"))
-		{
-			destroy(FLAG_SAVE);
-			return (0);
-		}
-		err(ac, av, rt, file);
-	}
+	if (ac == 2)
+		err(av, rt, file);
 	else
 		ft_putendl("./rt [fileName]");
 	return (EXIT_SUCCESS);
