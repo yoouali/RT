@@ -113,4 +113,4 @@ $ ./rt 'file_name' --save
 ### Obj file rendering
 
 ![Preview](images/mario.png?raw=true)
-![Preview](images/ligo.png?raw=true)
+![Preview](images/ligo.bmp?raw=true)
